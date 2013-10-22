@@ -1,0 +1,18 @@
+{% include "layout.html" %}
+<a href="/">TOP</a>
+<br>
+<br>
+{% from "macros/_forms.html" import render_errors %}
+ログイン---<br>
+<form method="POST" action="/login/">
+{{ form.login_id.label }} {{ form.login_id(size=20,class='loginclass') }} <br>
+{{ render_errors(form.login_id) }}
+{{ form.password.label }} {{ form.password(size=20) }}<br>
+{{ render_errors(form.password) }}
+<br>
+<input type="submit" value="go">
+<br>
+<br>
+<a href="/regist/">新規登録はこちらです</a>
+</body>
+</html>
