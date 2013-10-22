@@ -36,11 +36,12 @@ def index():
 
 @app.route("/facebook", methods=['GET', 'POST'])
 def facebooklogin():
+    # ここにかくもんじゃない。試しにやっただけ
     verification_code = request.args.get('code')
-    args = dict(client_id='167537889944255',
+    args = dict(client_id='XXXXXXXXXXXX',
                 redirect_uri=request.url)
     if verification_code:
-        args["client_secret"] = '96044a6e828ebb3393dac25bfc894cb4'
+        args["client_secret"] = 'XXXXXXXXXXXXXXX'
         args["code"] = verification_code
         response = cgi.parse_qs(urllib.urlopen(
                 "https://graph.facebook.com/oauth/access_token?" +
