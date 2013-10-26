@@ -4,9 +4,10 @@ from webapp.models.database import db_session
 
 
 class ModelsBase:
-    def __init__(self, dt):
-        for k, v in dt.items():
-            setattr(self, k, v)
+    def __init__(self, dt=None):
+        if dt is not None:
+            for k, v in dt.items():
+                setattr(self, k, v)
 
 
 class ModelManager:
@@ -19,8 +20,11 @@ class ModelManager:
 
     def insert(self, dt):
         try:
-            class_f = self.get_model()
-            m = class_f(dt)
+            if(isinstance(dt, dict)):  # 辞書が来たらmodel作成
+                class_f = self.get_model()
+                m = class_f(dt)
+            else:
+                m = dt  # modelが来たとする。
             db_session.add(m)
             return m
         except:
