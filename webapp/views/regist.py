@@ -20,6 +20,7 @@ def index():
             dt = {'login_id': form.login_id.data,
                   'password': form.password.data}
             user = usersManager.insert(dt)
+            usersManager.commit()
 
             # ログインさせる
             session = request.environ['beaker.session']

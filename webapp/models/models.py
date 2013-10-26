@@ -14,12 +14,14 @@ class ModelManager:
     def __init__(self):
         pass
 
+    def commit(self):
+        db_session.commit()
+
     def insert(self, dt):
         try:
             class_f = self.get_model()
             m = class_f(dt)
             db_session.add(m)
-            db_session.commit()
             return m
         except:
             logging.error(traceback.format_exc())
@@ -42,8 +44,7 @@ class ModelManager:
             return ret
         except:
             logging.error(traceback.format_exc())
-        finally:
-            db_session.commit()
+            return False
 
     def select_count(self, where=True):
         try:
@@ -51,8 +52,7 @@ class ModelManager:
             return db_session.query(class_f).filter(where).count()
         except:
             logging.error(traceback.format_exc())
-        finally:
-            db_session.commit()
+            return False
 
     def update(self, dt, where=True):
         try:
@@ -63,7 +63,6 @@ class ModelManager:
             for v in ret:
                 for k2, v2 in dt.items():
                     setattr(v, k2, v2)
-            db_session.commit()
             return True
         except:
             logging.error(traceback.format_exc())
@@ -79,7 +78,6 @@ class ModelManager:
                 return False
             for v in ret:
                 db_session.delete(v)
-            db_session.commit()
         except:
             logging.error(traceback.format_exc())
             return False

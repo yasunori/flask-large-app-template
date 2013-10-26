@@ -23,6 +23,7 @@ app.register_blueprint(user.app, url_prefix="/user")
 def page_not_found(error):
     return 'This page does not exist', 404
 
+
 @app.errorhandler(500)
 def internal_server_error(error):
     return 'Internal Server Error', 500
@@ -30,5 +31,6 @@ def internal_server_error(error):
 # 起動
 if __name__ == '__main__':
     app.config.update(config.get_app_conf(config.MODE))
+    config.set_log_conf(config.MODE)
     app.wsgi_app = SessionMiddleware(app.wsgi_app, config.get_app_conf(config.MODE)['SESSION_OPTIONS'])
     app.run(host='0.0.0.0')

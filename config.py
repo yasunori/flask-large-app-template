@@ -21,13 +21,17 @@ def get_app_conf(mode):
         'DEBUG': False,
         'TESTING': False,
         'WTF_CSRF_ENABLED': False,
-        'DSN': 'postgresql://developer:@localhost:5432/testpy',
         'SESSION_OPTIONS': {
             'session.type': 'file',
             'session.data_dir': my_path + '/webapp/tmp',
             'session.cookie_expires': 86400,
             'session.auto': True
-        }
+        },
+        'DB': {
+            'DSN': 'postgresql://developer:@localhost:5432/testpy',
+            'AUTO_COMMIT': False,
+            'AUTO_FLUSH': True
+        },
     }
 
     if(mode == 'PRODUCTION'):
@@ -35,11 +39,11 @@ def get_app_conf(mode):
 
     if(mode == 'DEVELOPMENT'):
         CONFIG['DEBUG'] = True
-        CONFIG['DSN'] = 'postgresql://developer:@localhost:5432/testpy'
+        CONFIG['DB']['DSN'] = 'postgresql://developer:@localhost:5432/testpy'
 
     if(mode == 'TESTING'):
         CONFIG['TESTING'] = True
-        CONFIG['DSN'] = 'postgresql://developer:@localhost:5432/testpy_test'
+        CONFIG['DB']['DSN'] = 'postgresql://developer:@localhost:5432/testpy_test'
 
     return CONFIG
 
