@@ -4,6 +4,7 @@ from wtforms import Form
 from wtforms import TextField, PasswordField
 from wtforms import validators, ValidationError
 from webapp.models.users import UsersManager
+from webapp.models.models import DBException
 
 
 def check_exists(form, field):
@@ -11,8 +12,11 @@ def check_exists(form, field):
     login_idが既に使われているかどうかをチェックする
     '''
     usersManager = UsersManager()
-    if(usersManager.check_exists(login_id=field.data)):
-        raise ValidationError('既にあります')
+    try:
+        if(usersManager.check_exists(login_id=field.data)):
+            raise ValidationError('既にあります')
+    except DBException:
+        raise
 
 
 class RegistForm(Form):

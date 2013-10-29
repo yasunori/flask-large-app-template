@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask
+from flask import Flask, render_template
 from beaker.middleware import SessionMiddleware
 import config
 
@@ -18,15 +18,17 @@ app.register_blueprint(regist.app, url_prefix="/regist")
 from webapp.views import user
 app.register_blueprint(user.app, url_prefix="/user")
 
+
 # エラーハンドラの設定
 @app.errorhandler(404)
 def page_not_found(error):
-    return 'This page does not exist', 404
+    return render_template('common/error.html'), 404
 
 
 @app.errorhandler(500)
 def internal_server_error(error):
-    return 'Internal Server Error', 500
+    return render_template('common/error.html'), 500
+
 
 # 起動
 if __name__ == '__main__':

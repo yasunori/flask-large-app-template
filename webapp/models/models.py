@@ -29,7 +29,7 @@ class ModelManager:
             return m
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
 
     def select_one(self, dt, key='id'):
         try:
@@ -39,7 +39,7 @@ class ModelManager:
             return ret
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
 
     def select(self, where=True, order_by='id', offset=0, limit=20):
         try:
@@ -48,7 +48,7 @@ class ModelManager:
             return ret
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
 
     def select_count(self, where=True):
         try:
@@ -56,7 +56,7 @@ class ModelManager:
             return db_session.query(class_f).filter(where).count()
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
 
     def update(self, dt, where=True):
         try:
@@ -70,18 +70,18 @@ class ModelManager:
             return True
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
 
     def delete(self, where=True):
         if(where is True):
             return False
         try:
             class_f = self.get_model()
-            ret = db_session.query(class_f).filter(where)
-            if(ret.count <= 0):
-                return False
-            for v in ret:
-                db_session.delete(v)
+            db_session.query(class_f).filter(where).delete()
         except:
             logging.error(traceback.format_exc())
-            return False
+            raise DBException()
+
+
+class DBException(Exception):
+    """ Exceptopn """

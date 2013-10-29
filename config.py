@@ -50,7 +50,7 @@ def get_app_conf(mode):
 
 def set_log_conf(mode):
     LOGGING_STERAM_FLG = False
-    LOGGING_STERAM_LEVEL = logging.WARNING
+    LOGGING_STERAM_LEVEL = logging.CRITICAL
     LOGGING_FILE_FLG = True
     LOGGING_FILE_LEVEL = logging.WARNING
 
@@ -59,13 +59,13 @@ def set_log_conf(mode):
 
     if(mode == 'DEVELOPMENT'):
         LOGGING_STERAM_FLG = True
-        LOGGING_STERAM_LEVEL = logging.DEBUG
+        LOGGING_STERAM_LEVEL = logging.CRITICAL
         LOGGING_FILE_FLG = True
         LOGGING_FILE_LEVEL = logging.DEBUG
 
     if(mode == 'TESTING'):
         LOGGING_STERAM_FLG = False
-        LOGGING_STERAM_LEVEL = logging.DEBUG
+        LOGGING_STERAM_LEVEL = logging.CRITICAL
         LOGGING_FILE_FLG = True
         LOGGING_FILE_LEVEL = logging.DEBUG
 

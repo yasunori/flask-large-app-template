@@ -4,6 +4,7 @@ from wtforms import Form
 from wtforms import TextField, PasswordField
 from wtforms import validators, ValidationError
 from webapp.models.users import UsersManager, Users
+from webapp.models.models import DBException
 
 
 def check_user(form, field):
@@ -12,8 +13,11 @@ def check_user(form, field):
     '''
     where = (Users.login_id == form.login_id.data) & (Users.password == form.password.data)
     usersManager = UsersManager()
-    if not usersManager.select(where):
-        raise ValidationError('IDもしくはパスワードが異なります')
+    try:
+        if not usersManager.select(where):
+            raise ValidationError('IDもしくはパスワードが異なります')
+    except DBException:
+        raise
 
 
 class LoginForm(Form):
